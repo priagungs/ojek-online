@@ -1,9 +1,9 @@
 package com.future.ojekonline.repository;
 
-import com.future.ojekonline.entity.Booking;
-import com.future.ojekonline.entity.Customer;
-import com.future.ojekonline.entity.Driver;
-import com.future.ojekonline.entity.Status;
+import com.future.ojekonline.entity.model.Booking;
+import com.future.ojekonline.entity.model.Customer;
+import com.future.ojekonline.entity.model.Driver;
+import com.future.ojekonline.entity.model.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,11 +1,9 @@
-package com.future.ojekonline.service;
+package com.future.ojekonline.service.interf;
 
-import com.future.ojekonline.entity.Booking;
+import com.future.ojekonline.entity.model.Booking;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 @Service
 public interface BookingService {

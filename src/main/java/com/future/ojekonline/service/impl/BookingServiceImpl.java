@@ -1,8 +1,11 @@
-package com.future.ojekonline.service;
+package com.future.ojekonline.service.impl;
 
-import com.future.ojekonline.entity.Booking;
+import com.future.ojekonline.entity.model.Booking;
 import com.future.ojekonline.repository.BookingRepository;
+import com.future.ojekonline.service.interf.BookingService;
 import com.future.ojekonline.service.exception.NotFoundException;
+import com.future.ojekonline.service.interf.CustomerService;
+import com.future.ojekonline.service.interf.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

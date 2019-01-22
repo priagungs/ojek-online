@@ -1,11 +1,10 @@
-package com.future.ojekonline.service;
+package com.future.ojekonline.service.impl;
 
-import com.future.ojekonline.entity.Driver;
+import com.future.ojekonline.entity.model.Driver;
 import com.future.ojekonline.repository.DriverRepository;
 import com.future.ojekonline.service.exception.InvalidValueException;
 import com.future.ojekonline.service.exception.NotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.future.ojekonline.service.interf.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +28,9 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public Driver createDriver(Driver driver) {
+        if (repository.findByUsername(driver.getUsername()).isPresent()) {
+            throw new InvalidValueException("driver is already exists");
+        }
         return repository.save(driver);
     }
 
@@ -40,6 +42,9 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public Boolean deleteDriver(String id) {
+        if (!repository.findById(id).isPresent()) {
+            throw new NotFoundException("driver not found");
+        }
         repository.delete(id);
         return true;
     }

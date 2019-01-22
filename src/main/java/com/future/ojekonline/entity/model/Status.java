@@ -1,4 +1,4 @@
-package com.future.ojekonline.entity;
+package com.future.ojekonline.entity.model;
 
 public enum Status {
     CANCELED,

@@ -1,9 +1,11 @@
 package com.future.ojekonline.controller;
 
+import com.future.ojekonline.entity.model.Customer;
 import com.future.ojekonline.entity.model.Driver;
 import com.future.ojekonline.entity.response.BaseResponse;
 import com.future.ojekonline.service.exception.InvalidValueException;
 import com.future.ojekonline.service.exception.NotFoundException;
+import com.future.ojekonline.service.interf.CustomerService;
 import com.future.ojekonline.service.interf.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,30 +15,40 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-public class DriverController {
+public class CustomerController {
 
     @Autowired
-    DriverService driverService;
+    CustomerService customerService;
 
-    @GetMapping("/drivers")
-    Page<Driver> getDrivers(@RequestParam(name = "page") Integer page,
-                            @RequestParam(name = "limit") Integer limit,
-                            @RequestParam(name = "sort") String sort) {
-        return driverService.getDrivers(
-                new PageRequest(page, limit, Sort.Direction.ASC, sort));
+    @GetMapping("/customers/{id}")
+    BaseResponse<Customer> getCustomer(@PathVariable(name = "id") String id) {
+        Customer result;
+        BaseResponse<Customer> response = new BaseResponse<>();
+        try {
+            result = customerService.readCustomer(id);
+        }
+        catch (NotFoundException e) {
+            response.setStatus(404);
+            response.setMessage(e.getMessage());
+            return response;
+        }
+        response.setStatus(200);
+        response.setMessage("Success");
+        response.setPayload(result);
+        return response;
     }
 
-    @PostMapping("/drivers")
-    BaseResponse<Driver> createDriver(@RequestBody Driver driver) {
-        Driver result;
-        BaseResponse<Driver> response = new BaseResponse<>();
+    @PostMapping("/customers")
+    BaseResponse<Customer> createCustomer(@RequestBody Customer customer) {
+        Customer result;
+        BaseResponse<Customer> response = new BaseResponse<>();
         try {
-            result = driverService.createDriver(driver);
+            result = customerService.createCustomer(customer);
         }
         catch (InvalidValueException e) {
-             response.setStatus(400);
-             response.setMessage(e.getMessage());
-             return response;
+            response.setStatus(400);
+            response.setMessage(e.getMessage());
+            return response;
         }
         response.setStatus(200);
         response.setMessage("Success");
@@ -45,11 +57,11 @@ public class DriverController {
     }
 
     @PutMapping("/drivers/{id}")
-    BaseResponse<Driver> updateDriver(@RequestBody Driver driver, @PathVariable(name = "id") String id) {
-        Driver result;
-        BaseResponse<Driver> response = new BaseResponse<>();
+    BaseResponse<Customer> updateCustomer(@RequestBody Customer customer, @PathVariable(name = "id") String id) {
+        Customer result;
+        BaseResponse<Customer> response = new BaseResponse<>();
         try {
-            result = driverService.updateDriver(driver);
+            result = customerService.updateCustomer(customer);
         }
         catch (NotFoundException e) {
             response.setStatus(404);
@@ -63,10 +75,10 @@ public class DriverController {
     }
 
     @DeleteMapping("/drivers/{id}")
-    BaseResponse<Driver> deleteDriver(@PathVariable(name = "id") String id) {
-        BaseResponse<Driver> response = new BaseResponse<>();
+    BaseResponse<Customer> deleteCustomer(@PathVariable(name = "id") String id) {
+        BaseResponse<Customer> response = new BaseResponse<>();
         try {
-            driverService.deleteDriver(id);
+            customerService.deleteCustomer(id);
         }
         catch (NotFoundException e) {
             response.setStatus(404);

@@ -1,4 +1,4 @@
-package com.future.ojekonline.entity;
+package com.future.ojekonline.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -16,6 +16,7 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer")
+    @JsonIgnoreProperties({"bookings"})
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
